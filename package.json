@@ -1,0 +1,30 @@
+{
+  "name": "node-evm",
+  "version": "1.0.0",
+  "description": "simple evm",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "ts-node-dev --respawn ./src/index.ts",
+    "lint": "eslint src/**/*.ts",
+    "format": "eslint src/**/*.ts --fix"
+  },
+  "keywords": [
+    "evm",
+    "ethereum",
+    "smart",
+    "contracts"
+  ],
+  "author": "jose cerqueira",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^18.7.23",
+    "eslint": "^8.22.0",
+    "prettier": "^2.7.1",
+    "typescript": "^4.8.4"
+  },
+  "dependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.38.1",
+    "@typescript-eslint/parser": "^5.38.1"
+  }
+}
