@@ -27,6 +27,23 @@ class Memory {
     return this.#memory[offset] || BN_ZERO;
   }
 
+  public loadRange(offset: string, length: string): Buffer {
+    const offsetBN = BigNumber.from(offset);
+    const lengthBN = BigNumber.from(length);
+    if (offsetBN.lt(0)) throw new InvalidMemoryAccess(`Invalid offset: ${offset}`);
+
+    const data: Array<string> = [];
+    let counter = offsetBN;
+
+    while (lengthBN.add(offsetBN).gt(counter)) {
+      console.log(this.load(counter.toString()), 'loaded data');
+      data.push(this.load(counter.toString()));
+      counter = counter.add(1);
+    }
+
+    return Buffer.from(data.map(Number));
+  }
+
   public print() {
     console.log(this.#memory);
   }

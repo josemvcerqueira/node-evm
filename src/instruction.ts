@@ -49,3 +49,11 @@ export const MUL = registerIntruction(0x02, 'MUL', (ctx) => {
 
   return ctx.getStack().push(BigNumber.from(fst.mul(snd).mod(ethers.constants.MaxUint256.add(1))).toString());
 });
+
+export const MSTORE8 = registerIntruction(+'0x53', 'MSTORE8', (ctx) =>
+  ctx.getMemory().store(ctx.getStack().pop(), BigNumber.from(ctx.getStack().pop()).mod(256).toString()),
+);
+
+export const RETURN = registerIntruction(+'0xf3', 'RETURN', (ctx) =>
+  ctx.setReturnedData(ctx.getStack().pop(), ctx.getStack().pop()),
+);

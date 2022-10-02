@@ -2,12 +2,14 @@ import prompts from 'prompts';
 
 import { InvalidCodeOffSet, InvalidOpcode } from './errors';
 import ExecutionContext from './execution-context';
-import { Instruction, INSTRUCTIONS_BY_OPCODE } from './instruction';
+import { Instruction, INSTRUCTIONS_BY_OPCODE, STOP } from './instruction';
 
 const decodeOpcode = (ctx: ExecutionContext): Instruction => {
   const pc = ctx.getPC();
 
-  if (0 > pc || pc >= ctx.getCode().length) throw new InvalidCodeOffSet(`Invalid program counter: ${pc}`);
+  if (0 > pc) throw new InvalidCodeOffSet(`Invalid program counter: ${pc}`);
+
+  if (pc >= ctx.getCode().length) return STOP;
 
   const opcode = ctx.readCode(1);
 
@@ -31,6 +33,7 @@ const run = (code: Buffer) => {
     executionContext.getStack().print();
     console.log('Memory');
     executionContext.getMemory().print();
+    console.log(executionContext.getReturnedData());
     console.log('\n');
   }
 };

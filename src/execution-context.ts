@@ -3,6 +3,7 @@ import Stack from './stack';
 
 class ExecutionContext {
   #stopped = false;
+  #returnedData = Buffer.from([0]);
   constructor(
     private readonly code: Buffer,
     private pc = 0,
@@ -38,6 +39,15 @@ class ExecutionContext {
 
   public getMemory(): Memory {
     return this.memory;
+  }
+
+  public setReturnedData(offset: string, length: string): void {
+    this.#stopped = true;
+    this.#returnedData = this.memory.loadRange(offset, length);
+  }
+
+  public getReturnedData(): Buffer {
+    return this.#returnedData;
   }
 }
 
