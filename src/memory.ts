@@ -36,7 +36,6 @@ class Memory {
     let counter = offsetBN;
 
     while (lengthBN.add(offsetBN).gt(counter)) {
-      console.log(this.load(counter.toString()), 'loaded data');
       data.push(this.load(counter.toString()));
       counter = counter.add(1);
     }
