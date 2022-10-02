@@ -1,5 +1,3 @@
-import * as buffer from 'buffer';
-
 import Memory from './memory';
 import Stack from './stack';
 
@@ -17,9 +15,9 @@ class ExecutionContext {
   }
 
   public readCode(numBytes: number): number {
-    this.pc += numBytes;
-
-    return this.code[this.pc + numBytes];
+    const code = this.code[this.pc];
+    this.pc += +numBytes;
+    return code;
   }
 
   public getStack(): Stack {
@@ -32,6 +30,14 @@ class ExecutionContext {
 
   public getCode(): Buffer {
     return this.code;
+  }
+
+  public getStopped(): boolean {
+    return this.#stopped;
+  }
+
+  public getMemory(): Memory {
+    return this.memory;
   }
 }
 

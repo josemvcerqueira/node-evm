@@ -26,6 +26,10 @@ class Memory {
 
     return this.#memory[offset] || BN_ZERO;
   }
+
+  public print() {
+    console.log(this.#memory);
+  }
 }
 
 export default Memory;

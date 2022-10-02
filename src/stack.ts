@@ -9,6 +9,7 @@ class Stack {
 
   public push(item: string): void {
     const bnValue = BigNumber.from(item);
+
     if (bnValue.lt(0) || bnValue.gt(ethers.constants.MaxUint256)) throw new InvalidStackItem(`${item} is out of range`);
 
     if (this.#stack.length === this.#maxDepth) throw new StackOverFlow('The stack has a maximum size of 1024 items');
@@ -20,6 +21,10 @@ class Stack {
     if (!this.#stack.length) throw new StackUnderFlow('The stack has no items to remove');
 
     return this.#stack.pop() || BN_ZERO;
+  }
+
+  public print() {
+    console.log(this.#stack);
   }
 }
 
