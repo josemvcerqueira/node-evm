@@ -27,6 +27,20 @@ export const registerIntruction = (opcode: number, name: string, execute: (x: Ex
   return instruction;
 };
 
+const validJumpDestinations = (code: Buffer): ReadonlyArray<number> => {
+  const jumpDestions = [];
+
+  for (let i = 0; i < code.length; i++) {
+    const currentOperation = code[i];
+
+    if (currentOperation === +'0x5b') jumpDestions.push(i);
+
+    if (+'0x60' <= currentOperation && currentOperation <= +'0x7f') i += currentOperation - +'0x60' + 1;
+  }
+
+  return jumpDestions;
+};
+
 export const STOP = registerIntruction(0x00, 'STOP', (ctx) => ctx.stop());
 
 export const PUSH1 = registerIntruction(
@@ -57,3 +71,7 @@ export const MSTORE8 = registerIntruction(+'0x53', 'MSTORE8', (ctx) =>
 export const RETURN = registerIntruction(+'0xf3', 'RETURN', (ctx) =>
   ctx.setReturnedData(ctx.getStack().pop(), ctx.getStack().pop()),
 );
+
+export const DUP1 = registerIntruction(+'0x80', 'DUP1', (ctx) => ctx.getStack().push(ctx.getStack().peek(0)));
+
+export const SWAP1 = registerIntruction(+'0x90', 'SWAP1', (ctx) => ctx.getStack().swap(1));

@@ -23,6 +23,21 @@ class Stack {
     return this.#stack.pop() || BN_ZERO;
   }
 
+  public peek(index: number): string {
+    return index + 1 > this.#stack.length ? BN_ZERO : this.#stack[index];
+  }
+
+  public swap(index: number) {
+    const stackLength = this.#stack.length;
+
+    if (index > stackLength) throw new StackOverFlow(`Index ${index} is larger than stack length of ${stackLength}`);
+
+    const firstElem = this.#stack[0];
+
+    this.#stack[0] = this.#stack[index];
+    this.#stack[index] = firstElem;
+  }
+
   public print() {
     console.log(this.#stack);
   }
